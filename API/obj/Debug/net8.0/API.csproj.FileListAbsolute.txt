@@ -1,0 +1,67 @@
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\appsettings.json
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\API.exe
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\API.deps.json
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\API.runtimeconfig.json
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\API.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\API.pdb
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Core.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Infrastructure.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Infrastructure.pdb
+C:\Users\Admin\Desktop\qmed-web-application\API\bin\Debug\net8.0\Core.pdb
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.AssemblyInfo.cs
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.build.API.props
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.API.props
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.API.props
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\scopedcss\bundle\API.styles.css
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.csproj.Up2Date
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\refint\API.dll
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.pdb
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\API.genruntimeconfig.cache
+C:\Users\Admin\Desktop\qmed-web-application\API\obj\Debug\net8.0\ref\API.dll
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\appsettings.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\API.exe
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\API.deps.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\API.runtimeconfig.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\API.dll
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\API.pdb
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\Core.dll
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\Infrastructure.dll
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\Infrastructure.pdb
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\bin\Debug\net8.0\Core.pdb
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.AssemblyInfo.cs
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.build.API.props
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.API.props
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.API.props
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\scopedcss\bundle\API.styles.css
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.csproj.Up2Date
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.dll
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\refint\API.dll
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.pdb
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\API.genruntimeconfig.cache
+C:\Users\Admin\Desktop\GitHub Projects\qmed-web-application\API\obj\Debug\net8.0\ref\API.dll
