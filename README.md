@@ -1,2 +1,2 @@
 ## QMED
-This project is not finished.
+This project is in developing mode.
