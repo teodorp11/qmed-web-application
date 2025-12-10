@@ -3,9 +3,6 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
-# Visual Studio
-.vs/
-
 # Global Configuration File
 global.json
 
