@@ -13,7 +13,7 @@ public interface IProductRepository
 
     void UpdateProduct(Product product);
 
-    void DeletProduct(Product product);
+    void DeleteProduct(Product product);
 
     bool ProductExists(int id);
 
