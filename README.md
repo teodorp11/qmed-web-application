@@ -1,2 +1,2 @@
 ## QMED
-This project is in developing mode.
+This project is in development mode.
