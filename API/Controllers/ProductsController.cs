@@ -37,7 +37,7 @@ public class ProductsController(IProductRepository repo) : ControllerBase
     {
         repo.AddProduct(product);
         
-        if (await repo.SaveChangeAsync())
+        if (await repo.SaveChangesAsync())
         {
             return CreatedAtAction("GetProduct", new {id = product.Id}, product);
         }
@@ -55,7 +55,7 @@ public class ProductsController(IProductRepository repo) : ControllerBase
         
         repo.UpdateProduct(product);
 
-        if (await repo.SaveChangeAsync())
+        if (await repo.SaveChangesAsync())
         {
             return NoContent();
         }
@@ -75,12 +75,24 @@ public class ProductsController(IProductRepository repo) : ControllerBase
 
         repo.DeleteProduct(product);
 
-        if (await repo.SaveChangeAsync())
+        if (await repo.SaveChangesAsync())
         {
             return NoContent();
         }
 
         return BadRequest("Problem deleting the product.");
+    }
+
+    [HttpGet("brands")]
+    public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
+    {
+        return Ok(await repo.GetBrandsAsync());
+    }
+
+    [HttpGet("types")]
+    public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
+    {
+        return Ok(await repo.GetTypesAsync());
     }
 
     private bool ProductExists(int id)

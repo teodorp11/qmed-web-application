@@ -8,6 +8,8 @@ public interface IProductRepository
     Task<IReadOnlyList<Product>> GetProductsAsync();
 
     Task<Product?> GetProductByIdAsync(int id);
+    Task<IReadOnlyList<string>> GetBrandsAsync();
+    Task<IReadOnlyList<string>> GetTypesAsync();
 
     void AddProduct(Product product);
 
@@ -17,5 +19,5 @@ public interface IProductRepository
 
     bool ProductExists(int id);
 
-    Task<bool> SaveChangeAsync();
+    Task<bool> SaveChangesAsync();
 }
