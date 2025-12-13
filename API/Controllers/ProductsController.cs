@@ -15,9 +15,9 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
 {
     
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, [FromQuery] string? sort)
+    public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts([FromQuery] ProductSpecificationParameters specParams)
     {
-        var spec = new ProductSpecification(brand, type, sort);
+        var spec = new ProductSpecification(specParams);
         
         var products = await repo.ListAsync(spec);
   
