@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Entities;
 using Core.Interfaces;
 
@@ -19,7 +20,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 try
