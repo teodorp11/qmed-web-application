@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.button-overrides(
+    (
+      filled-container-shape: '6px',
+      outlined-container-shape: '6px',
+    )
+  );
+  @include mat.badge-overrides(
+    (
+      background-color: rgb(137, 137, 148),
+      disabled-state-background-color: red,
+    )
+  );
+}
