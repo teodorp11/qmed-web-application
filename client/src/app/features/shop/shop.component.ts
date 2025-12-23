@@ -1,10 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ShopService } from '../../core/services/shop.service';
 import { Product } from '../../shared/models/product';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { HeaderComponent } from '../../layout/header/header.component';
 import { ProductItemComponent } from './product-item/product-item.component';
-import { CurrencyPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 import { MatButton, MatIconButton } from '@angular/material/button';

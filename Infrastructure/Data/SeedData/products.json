@@ -1,164 +1,289 @@
 [
   {
-    "Name": "Angular Speedster Board 2000",
-    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 200,
-    "PictureUrl": "/images/products/sb-ang1.png",
-    "Type": "Boards",
-    "Brand": "Angular",
+    "Name": "Q-Amoxicillin 500mg",
+
+    "Description": "Broad-spectrum antibiotic used to treat various bacterial infections. Contains 20 capsules per pack.",
+
+    "Price": 12.5,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Antibiotics",
+
+    "Brand": "Q-Gen",
+
     "QuantityInStock": 82
   },
+
   {
-    "Name": "Green Angular Board 3000",
-    "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
-    "Price": 150,
-    "PictureUrl": "/images/products/sb-ang2.png",
-    "Type": "Boards",
-    "Brand": "Angular",
+    "Name": "Q-Azithromycin 250mg",
+
+    "Description": "Effective treatment for respiratory, skin, and ear infections. Fast-acting formula.",
+
+    "Price": 18.25,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Antibiotics",
+
+    "Brand": "Q-Gen",
+
     "QuantityInStock": 75
   },
+
   {
-    "Name": "Core Board Speed Rush 3",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 180,
-    "PictureUrl": "/images/products/sb-core1.png",
-    "Type": "Boards",
-    "Brand": "NetCore",
+    "Name": "Cardio-Pulse BP Monitor",
+
+    "Description": "Digital upper arm blood pressure monitor with large LCD display and 99-reading memory.",
+
+    "Price": 45.99,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Devices",
+
+    "Brand": "PulseTech",
+
     "QuantityInStock": 3
   },
+
   {
-    "Name": "Net Core Super Board",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 300,
-    "PictureUrl": "/images/products/sb-core2.png",
-    "Type": "Boards",
-    "Brand": "NetCore",
+    "Name": "Advanced Gluco-Meter Kit",
+
+    "Description": "High-accuracy blood glucose monitoring system includes lancing device and 50 test strips.",
+
+    "Price": 65.0,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Devices",
+
+    "Brand": "PulseTech",
+
     "QuantityInStock": 52
   },
+
   {
-    "Name": "React Board Super Whizzy Fast",
-    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 250,
-    "PictureUrl": "/images/products/sb-react1.png",
-    "Type": "Boards",
-    "Brand": "React",
+    "Name": "Relief-Plus Ibuprofen 400mg",
+
+    "Description": "Non-steroidal anti-inflammatory drug (NSAID) for rapid relief of pain, fever, and inflammation.",
+
+    "Price": 9.99,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Pain Relief",
+
+    "Brand": "ReliefCo",
+
     "QuantityInStock": 97
   },
+
   {
-    "Name": "Typescript Entry Board",
-    "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
-    "Price": 120,
-    "PictureUrl": "/images/products/sb-ts1.png",
-    "Type": "Boards",
-    "Brand": "Typescript",
+    "Name": "Junior Paracetamol Syrup",
+
+    "Description": "Strawberry flavored liquid suspension for pain and fever relief in children aged 2-12.",
+
+    "Price": 7.5,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Pain Relief",
+
+    "Brand": "ReliefCo",
+
     "QuantityInStock": 37
   },
+
   {
-    "Name": "Core Blue Hat",
-    "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 10,
-    "PictureUrl": "/images/products/hat-core1.png",
-    "Type": "Hats",
-    "Brand": "NetCore",
+    "Name": "N95 Medical Grade Mask",
+
+    "Description": "High-filtration protective face mask with adjustable nose clip and comfortable ear loops. Pack of 10.",
+
+    "Price": 25.0,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "PPE",
+
+    "Brand": "ShieldMax",
+
     "QuantityInStock": 32
   },
+
   {
-    "Name": "Green React Woolen Hat",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 8,
-    "PictureUrl": "/images/products/hat-react1.png",
-    "Type": "Hats",
-    "Brand": "React",
+    "Name": "Sterile Surgical Gloves",
+
+    "Description": "Latex-free, powder-free sterile gloves for clinical and surgical use. Size Medium.",
+
+    "Price": 15.5,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "PPE",
+
+    "Brand": "ShieldMax",
+
     "QuantityInStock": 6
   },
+
   {
-    "Name": "Purple React Woolen Hat",
-    "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 15,
-    "PictureUrl": "/images/products/hat-react2.png",
-    "Type": "Hats",
-    "Brand": "React",
+    "Name": "Disposable Isolation Gown",
+
+    "Description": "Fluid-resistant protective gown with elastic cuffs for healthcare environments.",
+
+    "Price": 12.0,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "PPE",
+
+    "Brand": "ShieldMax",
+
     "QuantityInStock": 17
   },
+
   {
-    "Name": "Blue Code Gloves",
-    "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
-    "Price": 18,
-    "PictureUrl": "/images/products/glove-code1.png",
-    "Type": "Gloves",
-    "Brand": "VS Code",
+    "Name": "Vitamin C + Zinc Effervescent",
+
+    "Description": "Immune system support tablets. Dissolves in water for a refreshing orange-flavored drink.",
+
+    "Price": 14.25,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Supplements",
+
+    "Brand": "VitaLife",
+
     "QuantityInStock": 74
   },
+
   {
-    "Name": "Green Code Gloves",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 15,
-    "PictureUrl": "/images/products/glove-code2.png",
-    "Type": "Gloves",
-    "Brand": "VS Code",
+    "Name": "Daily Multi-Vitamin Men",
+
+    "Description": "Comprehensive blend of 24 essential vitamins and minerals tailored for men's health.",
+
+    "Price": 22.0,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Supplements",
+
+    "Brand": "VitaLife",
+
     "QuantityInStock": 19
   },
+
   {
-    "Name": "Purple React Gloves",
-    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.",
-    "Price": 16,
-    "PictureUrl": "/images/products/glove-react1.png",
-    "Type": "Gloves",
-    "Brand": "React",
+    "Name": "Omega-3 Fish Oil 1000mg",
+
+    "Description": "Pure deep-sea fish oil rich in EPA and DHA for heart, brain, and joint health.",
+
+    "Price": 19.5,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Supplements",
+
+    "Brand": "VitaLife",
+
     "QuantityInStock": 77
   },
+
   {
-    "Name": "Green React Gloves",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 14,
-    "PictureUrl": "/images/products/glove-react2.png",
-    "Type": "Gloves",
-    "Brand": "React",
+    "Name": "Probiotic Digestive Care",
+
+    "Description": "Multi-strain probiotic capsules to support gut health and natural flora balance.",
+
+    "Price": 28.99,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Supplements",
+
+    "Brand": "VitaLife",
+
     "QuantityInStock": 45
   },
+
   {
-    "Name": "Redis Red Boots",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 250,
-    "PictureUrl": "/images/products/boot-redis1.png",
-    "Type": "Boots",
-    "Brand": "Redis",
+    "Name": "Dermacare Hydrating Lotion",
+
+    "Description": "Fragrance-free moisturizer for dry and sensitive skin. Dermatologist recommended.",
+
+    "Price": 16.5,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Skincare",
+
+    "Brand": "DermaQ",
+
     "QuantityInStock": 49
   },
+
   {
-    "Name": "Core Red Boots",
-    "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-    "Price": 189.99,
-    "PictureUrl": "/images/products/boot-core2.png",
-    "Type": "Boots",
-    "Brand": "NetCore",
+    "Name": "Antiseptic Skin Cleanser",
+
+    "Description": "Medicated cleanser for pre-operative skin preparation and general wound cleaning.",
+
+    "Price": 11.75,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Skincare",
+
+    "Brand": "DermaQ",
+
     "QuantityInStock": 28
   },
+
   {
-    "Name": "Core Purple Boots",
-    "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-    "Price": 199.99,
-    "PictureUrl": "/images/products/boot-core1.png",
-    "Type": "Boots",
-    "Brand": "NetCore",
+    "Name": "Healing Ointment for Scars",
+
+    "Description": "Advanced silicone-based gel to reduce the appearance of surgical and injury scars.",
+
+    "Price": 34.99,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "Skincare",
+
+    "Brand": "DermaQ",
+
     "QuantityInStock": 69
   },
+
   {
-    "Name": "Angular Purple Boots",
-    "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
-    "Price": 150,
-    "PictureUrl": "/images/products/boot-ang2.png",
-    "Type": "Boots",
-    "Brand": "Angular",
+    "Name": "Q-First Aid Travel Kit",
+
+    "Description": "Compact kit containing bandages, wipes, tape, and scissors for emergency use on the go.",
+
+    "Price": 21.0,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "First Aid",
+
+    "Brand": "Q-Gen",
+
     "QuantityInStock": 35
   },
+
   {
-    "Name": "Angular Blue Boots",
-    "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-    "Price": 180,
-    "PictureUrl": "/images/products/boot-ang1.png",
-    "Type": "Boots",
-    "Brand": "Angular",
+    "Name": "Elastic Compression Bandage",
+
+    "Description": "Self-adherent wrap for supporting sprains and securing dressings without clips.",
+
+    "Price": 5.5,
+
+    "PictureUrl": "/images/placeholder.png",
+
+    "Type": "First Aid",
+
+    "Brand": "Q-Gen",
+
     "QuantityInStock": 27
   }
 ]
