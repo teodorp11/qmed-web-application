@@ -12,7 +12,7 @@
       <a
         routerLink="/cart"
         routerLinkActive="active"
-        matBadge="5"
+        [matBadge]="cartService.itemCount()"
         matBadgeSize="large"
         class="custom-badge mt-2 mr-2"
       >
