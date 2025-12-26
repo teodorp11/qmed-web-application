@@ -20,4 +20,12 @@ export class CartItemComponent {
   incrementQuantity() {
     this.cartService.addItemToCart(this.item());
   }
+
+  decrementQuantity() {
+    this.cartService.removeItemFromCart(this.item().productId);
+  }
+
+  removeItemFromCart() {
+    this.cartService.removeItemFromCart(this.item().productId, this.item().quantity);
+  }
 }

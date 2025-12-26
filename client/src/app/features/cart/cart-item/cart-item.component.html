@@ -5,7 +5,7 @@
     </a>
     <div class="flex items-center justify-between order-3">
       <div class="flex items-center align-middle gap-3">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="decrementQuantity()">
           <mat-icon class="text-red-600">remove</mat-icon>
         </button>
 
@@ -27,7 +27,7 @@
       </a>
 
       <div class="flex items-center gap-4">
-        <button mat-button class="text-red-700">
+        <button mat-button class="text-red-700" (click)="removeItemFromCart()">
           <mat-icon>delete</mat-icon>
           Delete
         </button>
