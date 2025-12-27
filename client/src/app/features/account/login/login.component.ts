@@ -14,12 +14,12 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  private fb = inject(FormBuilder);
+  private formBuilder = inject(FormBuilder);
   private accountService = inject(AccountService);
   private router = inject(Router);
   returnUrl = '/shop';
 
-  loginForm = this.fb.group({
+  loginForm = this.formBuilder.group({
     email: [''],
     password: [''],
   });

@@ -22,9 +22,11 @@ export class AccountService {
   }
 
   getUserInfo() {
-    return this.http.get<User>(this.baseUrl + 'account/user-info').subscribe({
-      next: (user) => this.currentUser.set(user),
-    });
+    return this.http
+      .get<User>(this.baseUrl + 'account/user-info', { withCredentials: true })
+      .subscribe({
+        next: (user) => this.currentUser.set(user),
+      });
   }
 
   logout() {
