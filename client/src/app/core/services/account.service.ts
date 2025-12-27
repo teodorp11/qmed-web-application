@@ -11,10 +11,10 @@ export class AccountService {
   private http = inject(HttpClient);
   currentUser = signal<User | null>(null);
 
-  login(values: string) {
+  login(values: any) {
     let params = new HttpParams();
     params = params.append('useCookies', true);
-    return this.http.post<User>(this.baseUrl + 'login', values, { params });
+    return this.http.post<User>(this.baseUrl + 'login', values, { params, withCredentials: true });
   }
 
   register(values: any) {
@@ -28,7 +28,7 @@ export class AccountService {
   }
 
   logout() {
-    return this.http.post(this.baseUrl + 'account/logout', {});
+    return this.http.post(this.baseUrl + 'account/logout', {}, { withCredentials: true });
   }
 
   updateAddress(address: Address) {
