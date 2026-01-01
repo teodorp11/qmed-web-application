@@ -12,6 +12,8 @@ public class StoreContext(DbContextOptions options) : IdentityDbContext<AppUser>
 
     public DbSet<Address> Addresses { get; set; }
 
+    public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

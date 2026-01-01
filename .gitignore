@@ -5,6 +5,7 @@
 
 # Global Configuration File
 global.json
+appsettings.json
 
 # dotenv files
 .env
