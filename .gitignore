@@ -5,7 +5,11 @@
 
 # Global Configuration File
 global.json
-API/appsettings.json
+
+# Project Specific Ignores
+**/appsettings.json
+**/bin/
+**/obj/
 
 # dotenv files
 .env
