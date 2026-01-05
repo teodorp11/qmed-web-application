@@ -11,6 +11,7 @@ import { CartService } from './cart.service';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from '../../shared/models/cart';
 import { firstValueFrom, map } from 'rxjs';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ import { firstValueFrom, map } from 'rxjs';
 export class StripeService {
   baseUrl = environment.apiUrl;
   private cartService = inject(CartService);
+  private accountService = inject(AccountService);
   private http = inject(HttpClient);
   private stripePromise: Promise<Stripe | null>;
   private elements?: StripeElements;
@@ -50,14 +52,32 @@ export class StripeService {
   async createAddressElement() {
     if (!this.addressElement) {
       const elements = await this.initializeElements();
-    }
-    if (this.elements) {
-      const options: StripeAddressElementOptions = {
-        mode: 'shipping',
-      };
-      this.addressElement = this.elements.create('address', options);
-    } else {
-      throw new Error('Elements instance has not been loaded');
+      if (elements) {
+        const user = this.accountService.currentUser();
+        let defaultValues: StripeAddressElementOptions['defaultValues'] = {};
+
+        if (user) {
+          defaultValues.name = user.firstName + ' ' + user.lastName;
+        }
+
+        if (user?.address) {
+          defaultValues.address = {
+            line1: user.address.line1,
+            line2: user.address.line2,
+            city: user.address.city,
+            state: user.address.state,
+            country: user.address.country,
+            postal_code: user.address.postalCode,
+          };
+        }
+        const options: StripeAddressElementOptions = {
+          mode: 'shipping',
+          defaultValues,
+        };
+        this.addressElement = elements.create('address', options);
+      } else {
+        throw new Error('Elements instance has not been loaded');
+      }
     }
     return this.addressElement;
   }
@@ -75,5 +95,10 @@ export class StripeService {
         return cart;
       })
     );
+  }
+
+  disposeElements() {
+    this.elements = undefined;
+    this.addressElement = undefined;
   }
 }
