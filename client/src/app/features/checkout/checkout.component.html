@@ -17,7 +17,13 @@
           <button matStepperNext mat-flat-button>Next</button>
         </div>
       </mat-step>
-      <mat-step label="Shipping">Delivery from</mat-step>
+      <mat-step label="Shipping">
+        <app-checkout-delivery></app-checkout-delivery>
+        <div class="flex justify-between mt-6">
+          <button matStepperPrevious mat-stroked-button>Back</button>
+          <button matStepperNext mat-flat-button>Next</button>
+        </div>
+      </mat-step>
       <mat-step label="Payment">Payment from</mat-step>
       <mat-step label="Confirmation">Review from</mat-step>
     </mat-stepper>

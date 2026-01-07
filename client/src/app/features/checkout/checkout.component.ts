@@ -11,10 +11,18 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Address } from '../../shared/models/user';
 import { AccountService } from '../../core/services/account.service';
 import { firstValueFrom } from 'rxjs';
+import { CheckoutDeliveryComponent } from './checkout-delivery/checkout-delivery.component';
 
 @Component({
   selector: 'app-checkout',
-  imports: [OrderSummaryComponent, MatStepperModule, MatButton, RouterLink, MatCheckboxModule],
+  imports: [
+    OrderSummaryComponent,
+    MatStepperModule,
+    MatButton,
+    RouterLink,
+    MatCheckboxModule,
+    CheckoutDeliveryComponent,
+  ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
 })
@@ -44,6 +52,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.snackbar.error('Could not save address: State is required.');
         }
       }
+    }
+    if (event.selectedIndex == 2) {
+      await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
     }
   }
 
