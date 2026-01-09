@@ -1,1 +1,25 @@
-<p>checkout-success works!</p>
+<section class="bg-white py-16">
+  <h2 class="font font-semibold text-2xl mb-2">Thanks for your order!</h2>
+  <div class="space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-6 mb-8">
+    <dl class="flex items-center justify-between gap-4">
+      <dt class="font-normal text-gray-500">Date</dt>
+      <dt class="font-normal text-gray-900">9 Feb 2026</dt>
+    </dl>
+    <dl class="flex items-center justify-between gap-4">
+      <dt class="font-normal text-gray-500">Payment method</dt>
+      <dt class="font-normal text-gray-900">Visa</dt>
+    </dl>
+    <dl class="flex items-center justify-between gap-4">
+      <dt class="font-normal text-gray-500">Address</dt>
+      <dt class="font-normal text-gray-900">Address goes here</dt>
+    </dl>
+    <dl class="flex items-center justify-between gap-4">
+      <dt class="font-normal text-gray-500">Amount</dt>
+      <dt class="font-normal text-gray-900">$100</dt>
+    </dl>
+  </div>
+  <div class="flex -tmes-center space-x-4">
+    <button routerLink="/orders/42" mat-flat-button>View your order</button>
+    <button routerLink="/shop" mat-stroked-button>Continue shopping</button>
+  </div>
+</section>
