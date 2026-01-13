@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace API.Controllers;
 
-public class PaymentsController(IPaymentService paymentService, IGenericRepository<DeliveryMethod> deliveryMethodRepo) : BaseApiController
+public class PaymentsController(IPaymentService paymentService, IUnitOfWork unitOfWork) : BaseApiController
 {
     [Authorize]
     [HttpPost("{cartId}")]
@@ -23,7 +23,7 @@ public class PaymentsController(IPaymentService paymentService, IGenericReposito
     [HttpGet("delivery-methods")]
     public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
     {
-        return Ok(await deliveryMethodRepo.ListAllAsync());
+        return Ok(await unitOfWork.Repository<DeliveryMethod>().ListAllAsync());
     }
 
 }
