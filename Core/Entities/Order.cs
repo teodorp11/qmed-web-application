@@ -9,7 +9,7 @@ public class Order : BaseEntity
     public ShippingAddress ShippingAddress { get; set; }
     public DeliveryMethod DeliveryMethod { get; set; }
     public PaymentSummary PaymentSummary { get; set; }
-    public IReadOnlyList<OrderItem> OrderItems { get; set; } = [];
+    public List<OrderItem> OrderItems { get; set; } = [];
     public decimal Subtotal { get; set; }
     public OrderStatus Status = OrderStatus.Pending;
     public required string PaymentIntentId { get; set; }

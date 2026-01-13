@@ -1,4 +1,3 @@
-using System;
 using System.Linq.Expressions;
 using Core.Interfaces;
 
@@ -6,10 +5,11 @@ namespace Core.Specifications;
 
 public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecification<T>
 {
-    protected BaseSpecification() : this(null) {}
+    protected BaseSpecification() : this(null) { }
+
     public Expression<Func<T, bool>>? Criteria => criteria;
 
-    public Expression<Func<T, object>>? OrderBy { get; private set;}
+    public Expression<Func<T, object>>? OrderBy { get; private set; }
 
     public Expression<Func<T, object>>? OrderByDescending { get; private set; }
 
@@ -21,11 +21,9 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
 
     public bool IsPagingEnabled { get; private set; }
 
-    public List<Expression<Func<T, object>>> Includes = [];
+    public List<Expression<Func<T, object>>> Includes {get; } = [];
 
-    public List<string> IncludeStrings { get; } = [];
-
-    List<Expression<Func<T, object>>> ISpecification<T>.Includes => throw new NotImplementedException();
+    public List<string> IncludeStrings {get; } = [];
 
     public IQueryable<T> ApplyCriteria(IQueryable<T> query)
     {
@@ -37,19 +35,24 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
         return query;
     }
 
+    protected void AddInclude(Expression<Func<T, object>> includeExpressions)
+    {
+        Includes.Add(includeExpressions);
+    }
+
     protected void AddInclude(string includeString)
     {
         IncludeStrings.Add(includeString); // For ThenInclude
     }
 
-    protected void AddOrderBy(Expression<Func<T, object>> OrderByExpression)
+    protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
     {
-        OrderBy = OrderByExpression;
+        OrderBy = orderByExpression;
     }
 
-    protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
+    protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
     {
-        OrderByDescending = orderByDescendingExpression;
+        OrderByDescending = orderByDescExpression;
     }
 
     protected void ApplyDistinct()
@@ -65,9 +68,10 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     }
 }
 
-public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria) : BaseSpecification<T>(criteria), ISpecification<T, TResult>
+public class BaseSpecification<T, TResult>(Expression<Func<T, bool>> criteria)
+    : BaseSpecification<T>(criteria), ISpecification<T, TResult>
 {
-    protected BaseSpecification() : this(null) {}
+    protected BaseSpecification() : this(null!) { }
     public Expression<Func<T, TResult>>? Select { get; private set; }
 
     protected void AddSelect(Expression<Func<T, TResult>> selectExpression)
