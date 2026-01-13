@@ -3,6 +3,7 @@ using API.DTOs;
 using API.Extensions;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Specification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -72,4 +73,26 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
         return BadRequest("Problem creating order");
     }
 
+
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<Order>>> GetOrdersForUser()
+    {
+        var spec = new OrderSpecification(User.GetEmail());
+
+        var orders = await unitOfWork.Repository<Order>().ListAsync(spec);
+
+        return Ok(orders);
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Order>> GetOrderById(int id)
+    {
+        var spec = new OrderSpecification(User.GetEmail(), id);
+
+        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+
+        if (order == null) return NotFound();
+
+        return order;
+    }
 }
