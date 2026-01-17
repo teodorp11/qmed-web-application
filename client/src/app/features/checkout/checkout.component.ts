@@ -66,15 +66,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
+      // Don't initialize payment element here - wait until user navigates to payment step
+      // Initialize address element on all steps
       this.addressElement = await this.stripeService.createAddressElement();
       this.addressElement.mount('#address-element');
       this.addressElement.on('change', this.handleAddressChange);
-
-      this.paymentElement = await this.stripeService.createPaymentElement();
-      this.paymentElement.mount('#payment-element');
-      this.paymentElement.on('change', this.handlePaymentChange);
     } catch (error: any) {
-      this.snackbar.error(error.message);
+      console.error('Error initializing address element:', error);
+      this.snackbar.error('Error loading address form: ' + error.message);
     }
   }
 
@@ -124,7 +123,30 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     }
     if (event.selectedIndex == 2) {
-      await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
+      try {
+        // Validate that delivery method is selected
+        const cart = this.cartService.cart();
+        if (!cart?.deliveryMethodId) {
+          this.snackbar.error('Please select a delivery method');
+          event.previouslySelectedIndex = event.selectedIndex;
+          return;
+        }
+
+        // Update payment intent with the selected delivery method (includes shipping cost)
+        console.log('Updating payment intent with delivery method:', cart.deliveryMethodId);
+        await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
+
+        // Now initialize payment element if not already done
+        if (!this.paymentElement) {
+          this.paymentElement = await this.stripeService.createPaymentElement();
+          this.paymentElement.mount('#payment-element');
+          this.paymentElement.on('change', this.handlePaymentChange);
+        }
+      } catch (error: any) {
+        console.error('Error initializing payment:', error);
+        this.snackbar.error('Error loading payment: ' + error.message);
+        event.previouslySelectedIndex = event.selectedIndex;
+      }
     }
     if (event.selectedIndex === 3) {
       await this.getConfirmationToken();
@@ -135,11 +157,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.loading = true;
     try {
       if (this.confirmationToken) {
+        console.log('Starting payment confirmation...');
         const result = await this.stripeService.confirmPayment(this.confirmationToken);
+        console.log('Payment confirmation result:', result);
 
         if (result.paymentIntent?.status === 'succeeded') {
+          console.log('Payment succeeded! Creating order...');
           const order = await this.createOrderModel();
+          console.log('Order model created:', order);
           const orderResult = await firstValueFrom(this.orderService.createOrder(order));
+          console.log('Order created successfully:', orderResult);
           if (orderResult) {
             this.cartService.deleteCart();
             this.cartService.selectedDelivery.set(null);

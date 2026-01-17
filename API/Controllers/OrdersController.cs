@@ -7,11 +7,12 @@ using Core.Specification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 
 namespace API.Controllers;
 
 [Authorize]
-public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) : BaseApiController
+public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork, ILogger<OrdersController> logger) : BaseApiController
 {
     [HttpPost]
     public async Task<ActionResult<Order>> CreateOrder(CreateOrderDto orderDto)
@@ -28,7 +29,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
 
         foreach (var item in cart.Items)
         {
-            var productItem = await unitOfWork.Repository<Product>().GetByIdAsync(item.ProductId);
+            var productItem = await unitOfWork.Repository<Core.Entities.Product>().GetByIdAsync(item.ProductId);
 
             if (productItem == null) return BadRequest("Problem with the order");
 
@@ -52,15 +53,29 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
 
         if (deliveryMethod == null) return BadRequest("No delivery method selected");
 
+        var subtotal = items.Sum(x => x.Price * x.Quantity);
+        var total = subtotal + deliveryMethod.Price;
+        var totalInCents = (long)Math.Round(total * 100, MidpointRounding.AwayFromZero);
+
+        logger.LogInformation($"=== ORDER SERVICE DEBUG ===");
+        logger.LogInformation($"OrderItems: {string.Join(", ", items.Select(x => $"${x.Price} x {x.Quantity}"))}");
+        logger.LogInformation($"Subtotal: ${subtotal}");
+        logger.LogInformation($"DeliveryMethodPrice: ${deliveryMethod.Price}");
+        logger.LogInformation($"Total: ${total}");
+        logger.LogInformation($"TotalInCents: {totalInCents} (${total})");
+        logger.LogInformation($"PaymentIntentId: {cart.PaymentIntentId}");
+        logger.LogInformation($"===========================");
+
         var order = new Order
         {
             OrderItems = items,
             DeliveryMethod = deliveryMethod,
             ShippingAddress = orderDto.ShippingAddress,
-            Subtotal = items.Sum(x => x.Price * x.Quantity),
+            Subtotal = subtotal,
             PaymentSummary = orderDto.PaymentSummary,
             PaymentIntentId = cart.PaymentIntentId,
-            BuyerEmail = email
+            BuyerEmail = email,
+            Status = OrderStatus.Pending
         };
 
         unitOfWork.Repository<Order>().Add(order);
@@ -72,7 +87,6 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
 
         return BadRequest("Problem creating order");
     }
-
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetOrdersForUser()

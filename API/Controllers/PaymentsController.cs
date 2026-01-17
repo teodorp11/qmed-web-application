@@ -4,14 +4,13 @@ using Core.Interfaces;
 using Core.Specification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Stripe;
 
 namespace API.Controllers;
 
-public class PaymentsController(IPaymentService paymentService, IUnitOfWork unitOfWork, ILogger<PaymentsController> logger) : BaseApiController
+public class PaymentsController(IPaymentService paymentService, IUnitOfWork unitOfWork, ILogger<PaymentsController> logger, IConfiguration config) : BaseApiController
 {
-    private readonly string _whSecret = "";
+    private readonly string _whSecret = config["StripeSettings:WhSecret"];
 
     [Authorize]
     [HttpPost("{cartId}")]
@@ -56,7 +55,8 @@ public class PaymentsController(IPaymentService paymentService, IUnitOfWork unit
         catch (Exception ex)
         {
             logger.LogError(ex, "Stripe webhook error");
-            return StatusCode(StatusCodes.Status500InternalServerError,  "Webhook error");
+            // Returning ex.Message allows you to see the real error in your Stripe CLI logs
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
         }
     }
 
@@ -79,15 +79,28 @@ public class PaymentsController(IPaymentService paymentService, IUnitOfWork unit
         if (intent.Status == "succeeded") 
         {
             var spec = new OrderSpecification(intent.Id, true);
+            var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
 
-            var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec)
-                ?? throw new Exception("Order not found");
+            // If order not found, it means the order hasn't been created yet in the database
+            // This can happen due to race condition between webhook and client-side order creation
+            // Log this for monitoring, but don't throw - the order will be created shortly
+            if (order == null)
+            {
+                logger.LogWarning($"Order not yet found for PaymentIntentId: {intent.Id}. " +
+                    "This is likely due to async processing - order will be created shortly by client request.");
+                return;
+            }
 
             var orderTotalInCents = (long)Math.Round(order.GetTotal() * 100, 
                 MidpointRounding.AwayFromZero);
 
+            logger.LogInformation($"Payment verification for OrderId: {order.Id}, PaymentIntentId: {intent.Id} | " +
+                $"Order Total in Cents: {orderTotalInCents} | Stripe Amount in Cents: {intent.Amount}");
+
             if (orderTotalInCents != intent.Amount)
             {
+                logger.LogWarning($"Payment mismatch detected! OrderId: {order.Id}, " +
+                    $"Expected: {intent.Amount} cents, Got: {orderTotalInCents} cents (Difference: {Math.Abs(intent.Amount - orderTotalInCents)} cents)");
                 order.Status = OrderStatus.PaymentMismatch;
             } 
             else
@@ -95,7 +108,9 @@ public class PaymentsController(IPaymentService paymentService, IUnitOfWork unit
                 order.Status = OrderStatus.PaymentReceived;
             }
 
-            // TODO: SignalR implementation
+            await unitOfWork.Complete();
+
+            //TODO: SignalR implementation
         }
     }
 

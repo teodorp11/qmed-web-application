@@ -2,11 +2,12 @@ using System;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Stripe;
 
 namespace Infrastructure.Services;
 
-public class PaymentService(IConfiguration config, ICartService cartService, IUnitOfWork unitOfWork) : IPaymentService
+public class PaymentService(IConfiguration config, ICartService cartService, IUnitOfWork unitOfWork, ILogger<PaymentService> logger) : IPaymentService
 {
     public async Task<ShoppingCart?> CreateOrUpdatePaymentIntent(string cartId)
     {
@@ -42,11 +43,27 @@ public class PaymentService(IConfiguration config, ICartService cartService, IUn
         var service = new PaymentIntentService();
         PaymentIntent? intent = null;
 
+        // Calculate amount with proper rounding to avoid PaymentMismatch errors
+        // Total is items subtotal + shipping, all in cents
+        var itemsTotal = Math.Round(cart.Items.Sum(x => x.Quantity * x.Price), 2);
+        var grandTotal = Math.Round(itemsTotal + shippingPrice, 2);
+        var amountInCents = (long)Math.Round(grandTotal * 100, MidpointRounding.AwayFromZero);
+
+        // Add logging for debugging PaymentMismatch issues
+        logger.LogInformation($"=== PAYMENT SERVICE DEBUG ===");
+        logger.LogInformation($"CartId: {cartId}");
+        logger.LogInformation($"Items: {string.Join(", ", cart.Items.Select(x => $"${x.Price} x {x.Quantity}"))}");
+        logger.LogInformation($"ItemsTotal: ${itemsTotal}");
+        logger.LogInformation($"ShippingPrice: ${shippingPrice}");
+        logger.LogInformation($"GrandTotal: ${grandTotal}");
+        logger.LogInformation($"AmountInCents: {amountInCents} (${grandTotal})");
+        logger.LogInformation($"===========================");
+
         if (string.IsNullOrEmpty(cart.PaymentIntentId))
         {
             var options = new PaymentIntentCreateOptions
             {
-                Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)shippingPrice * 100,
+                Amount = amountInCents,
                 Currency = "usd",
                 PaymentMethodTypes = ["card"]
             };
@@ -57,9 +74,10 @@ public class PaymentService(IConfiguration config, ICartService cartService, IUn
         {
             var options = new PaymentIntentUpdateOptions
             {
-                Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) + (long)shippingPrice * 100,
+                Amount = amountInCents,
             };
             intent = await service.UpdateAsync(cart.PaymentIntentId, options);
+            cart.ClientSecret = intent.ClientSecret;
         }
 
         await cartService.SetCartAsync(cart);
