@@ -13,4 +13,9 @@ public class Order : BaseEntity
     public decimal Subtotal { get; set; }
     public OrderStatus Status = OrderStatus.Pending;
     public required string PaymentIntentId { get; set; }
+
+    public decimal GetTotal()
+    {
+        return Subtotal + DeliveryMethod.Price;
+    }
 }
