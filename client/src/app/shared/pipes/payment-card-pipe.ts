@@ -11,13 +11,24 @@ export class PaymentCardPipe implements PipeTransform {
     value?: ConfirmationToken['payment_method_preview'] | PaymentSummary,
     ...args: unknown[]
   ): unknown {
-    if (value && 'card' in value) {
+    if (!value) {
+      return 'Unknown payment method';
+    }
+
+    // Handle PaymentSummary object (from checkout-success)
+    if ('brand' in value && 'last4' in value) {
+      const summary = value as PaymentSummary;
+      return `${summary.brand.toUpperCase()} **** **** **** ${summary.last4}, Exp: ${summary.expMonth}/${summary.expYear}`;
+    }
+
+    // Handle ConfirmationToken payment_method_preview (from checkout)
+    if ('card' in value) {
       const { brand, last4, exp_month, exp_year } = (
         value as ConfirmationToken['payment_method_preview']
       ).card!;
       return `${brand.toUpperCase()} **** **** **** ${last4}, Exp: ${exp_month}/${exp_year}`;
-    } else {
-      return 'Unknown payment method';
     }
+
+    return 'Unknown payment method';
   }
 }
