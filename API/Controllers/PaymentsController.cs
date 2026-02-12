@@ -33,6 +33,7 @@ public class PaymentsController(IPaymentService paymentService, IUnitOfWork unit
     }
 
     [HttpPost("webhook")]
+    [AllowAnonymous]
     public async Task<IActionResult> StripeWebhook()
     {
         var json = await new StreamReader(Request.Body).ReadToEndAsync();
@@ -40,12 +41,17 @@ public class PaymentsController(IPaymentService paymentService, IUnitOfWork unit
         try
         {
             var stripeEvent = ConstructStripeEvent(json);
+            
+            logger.LogInformation($"Webhook received: Event type = {stripeEvent.Type}, Data type = {stripeEvent.Data.Object?.GetType().Name}");
 
             if (stripeEvent.Data.Object is not PaymentIntent intent)
             {
+                logger.LogWarning($"Webhook event data is not PaymentIntent. Type: {stripeEvent.Data.Object?.GetType().Name}");
                 return BadRequest("Invalid event data");
             }
 
+            logger.LogInformation($"Processing PaymentIntent: {intent.Id}, Status: {intent.Status}");
+            
             await HandlePaymentIntentSucceeded(intent);
 
             return Ok();
@@ -79,47 +85,58 @@ public class PaymentsController(IPaymentService paymentService, IUnitOfWork unit
 
     private async Task HandlePaymentIntentSucceeded(PaymentIntent intent)
     {
-        if (intent.Status == "succeeded") 
+        logger.LogInformation($"HandlePaymentIntentSucceeded called. Status: {intent.Status}, Amount: {intent.Amount}");
+        
+        if (intent.Status != "succeeded") 
         {
-            var spec = new OrderSpecification(intent.Id, true);
-            var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+            logger.LogInformation($"PaymentIntent status is '{intent.Status}', not 'succeeded'. Skipping processing.");
+            return;
+        }
 
-            // If order not found, it means the order hasn't been created yet in the database
-            // This can happen due to race condition between webhook and client-side order creation
-            // Log this for monitoring, but don't throw - the order will be created shortly
-            if (order == null)
-            {
-                logger.LogWarning($"Order not yet found for PaymentIntentId: {intent.Id}. " +
-                    "This is likely due to async processing - order will be created shortly by client request.");
-                return;
-            }
+        var spec = new OrderSpecification(intent.Id, true);
+        var order = await unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
 
-            var orderTotalInCents = (long)Math.Round(order.GetTotal() * 100, 
-                MidpointRounding.AwayFromZero);
+        if (order == null)
+        {
+            logger.LogWarning($"Order not yet found for PaymentIntentId: {intent.Id}. " +
+                "This is likely due to async processing - order will be created shortly by client request.");
+            return;
+        }
 
-            logger.LogInformation($"Payment verification for OrderId: {order.Id}, PaymentIntentId: {intent.Id} | " +
-                $"Order Total in Cents: {orderTotalInCents} | Stripe Amount in Cents: {intent.Amount}");
+        logger.LogInformation($"Found order for PaymentIntentId: {intent.Id}. OrderId: {order.Id}, Current Status: {order.Status}");
 
-            if (orderTotalInCents != intent.Amount)
-            {
-                logger.LogWarning($"Payment mismatch detected! OrderId: {order.Id}, " +
-                    $"Expected: {intent.Amount} cents, Got: {orderTotalInCents} cents (Difference: {Math.Abs(intent.Amount - orderTotalInCents)} cents)");
-                order.Status = OrderStatus.PaymentMismatch;
-            } 
-            else
-            {
-                order.Status = OrderStatus.PaymentReceived;
-            }
+        var orderTotalInCents = (long)Math.Round(order.GetTotal() * 100, 
+            MidpointRounding.AwayFromZero);
 
-            await unitOfWork.Complete();
+        logger.LogInformation($"Payment verification for OrderId: {order.Id}, PaymentIntentId: {intent.Id} | " +
+            $"Order Total in Cents: {orderTotalInCents} | Stripe Amount in Cents: {intent.Amount}");
 
-            var connectionId = NotificationHub.GetConnectionIdByEmail(order.BuyerEmail);
+        if (orderTotalInCents != intent.Amount)
+        {
+            logger.LogWarning($"Payment mismatch detected! OrderId: {order.Id}, " +
+                $"Expected: {intent.Amount} cents, Got: {orderTotalInCents} cents (Difference: {Math.Abs(intent.Amount - orderTotalInCents)} cents)");
+            order.Status = OrderStatus.PaymentMismatch;
+        } 
+        else
+        {
+            logger.LogInformation($"Payment amount matches. Updating order status to PaymentReceived.");
+            order.Status = OrderStatus.PaymentReceived;
+        }
 
-            if (!string.IsNullOrEmpty(connectionId))
-            {
-                await hubContext.Clients.Client(connectionId)
-                    .SendAsync("OrderCompleteNotification", order.ToDto());
-            }
+        await unitOfWork.Complete();
+        logger.LogInformation($"Order status updated. OrderId: {order.Id}, New Status: {order.Status}");
+
+        var connectionId = NotificationHub.GetConnectionIdByEmail(order.BuyerEmail);
+
+        if (!string.IsNullOrEmpty(connectionId))
+        {
+            logger.LogInformation($"Sending SignalR notification to user {order.BuyerEmail} (ConnectionId: {connectionId})");
+            await hubContext.Clients.Client(connectionId)
+                .SendAsync("OrderCompleteNotification", order.ToDto());
+        }
+        else
+        {
+            logger.LogWarning($"No SignalR connection found for user {order.BuyerEmail}. Notification not sent, but order status has been updated.");
         }
     }
 
