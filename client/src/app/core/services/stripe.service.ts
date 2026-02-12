@@ -39,13 +39,16 @@ export class StripeService {
   async initializeElements() {
     if (!this.elements) {
       const stripe = await this.getStripeInstance();
+
       if (stripe) {
         try {
           // Get or create payment intent
           const updatedCart = await firstValueFrom(this.createOrUpdatePaymentIntent());
+
           if (!updatedCart || !updatedCart.clientSecret) {
             throw new Error('Failed to create payment intent');
           }
+
           this.elements = stripe.elements({
             clientSecret: updatedCart.clientSecret,
             appearance: { labels: 'floating' },
@@ -59,21 +62,8 @@ export class StripeService {
         throw new Error('Stripe has not been loaded.');
       }
     }
-    return this.elements;
-  }
 
-  async initializeAddressElements() {
-    // Create address elements without payment intent
-    const stripe = await this.getStripeInstance();
-    if (!stripe) {
-      throw new Error('Stripe has not been loaded.');
-    }
-    // Create a temporary elements instance just for the address element
-    // This doesn't require a clientSecret
-    const tempElements = stripe.elements({
-      appearance: { labels: 'floating' },
-    });
-    return tempElements;
+    return this.elements;
   }
 
   async createPaymentElement() {
@@ -90,7 +80,7 @@ export class StripeService {
 
   async createAddressElement() {
     if (!this.addressElement) {
-      const elements = await this.initializeAddressElements();
+      const elements = await this.initializeElements();
       if (elements) {
         const user = this.accountService.currentUser();
         let defaultValues: StripeAddressElementOptions['defaultValues'] = {};
@@ -133,38 +123,27 @@ export class StripeService {
     }
   }
 
-  async confirmPayment(confirmationToken: ConfirmationToken) {
+  // Add 'clientSecret: string' as the second parameter
+  async confirmPayment(confirmationToken: ConfirmationToken, clientSecret: string) {
     console.log('confirmPayment called with token:', confirmationToken.id);
+
     const stripe = await this.getStripeInstance();
+    if (!stripe) throw new Error('Stripe library failed to load');
+
     const elements = await this.initializeElements();
     const result = await elements.submit();
     if (result.error) throw new Error(result.error.message);
 
-    const cart = this.cartService.cart();
-    const clientSecret = cart?.clientSecret;
+    console.log('Calling stripe.confirmPayment with provided secret:', clientSecret);
 
-    console.log('About to call stripe.confirmPayment with clientSecret:', clientSecret);
-
-    if (!stripe) {
-      throw new Error('Stripe library failed to load');
-    }
-
-    if (!clientSecret) {
-      throw new Error(
-        'Payment intent was not properly initialized. Please refresh the page and try again.',
-      );
-    }
-
-    const paymentResult = await stripe.confirmPayment({
+    // Use the secret passed from the component
+    return await stripe.confirmPayment({
       clientSecret: clientSecret,
       confirmParams: {
         confirmation_token: confirmationToken.id,
       },
       redirect: 'if_required',
     });
-
-    console.log('Payment result:', paymentResult);
-    return paymentResult;
   }
 
   createOrUpdatePaymentIntent() {
@@ -175,14 +154,12 @@ export class StripeService {
     }
 
     console.log('Creating/updating payment intent for cart:', cart.id);
+
     return this.http.post<Cart>(this.baseUrl + 'payments/' + cart.id, {}).pipe(
       map((cart) => {
-        console.log(
-          'Payment intent created/updated successfully. clientSecret:',
-          cart.clientSecret,
-          'paymentIntentId:',
-          cart.paymentIntentId,
-        );
+        console.log('Payment intent created/updated successfully.');
+        console.log('clientSecret: ', cart.clientSecret);
+        console.log('paymentIntent: ', cart.paymentIntentId);
         this.cartService.setCart(cart);
         return cart;
       }),

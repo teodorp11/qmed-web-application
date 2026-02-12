@@ -154,44 +154,39 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   async confirmPayment(stepper: MatStepper) {
-    this.loading = true;
+    // Fixes the NG0100 error by deferring the loading state change
+    setTimeout(() => (this.loading = true));
+
     try {
       if (this.confirmationToken) {
-        console.log('Starting payment confirmation...');
-        const result = await this.stripeService.confirmPayment(this.confirmationToken);
-        console.log('Payment confirmation result:', result);
+        // 1. Get the fresh cart directly from the API response
+        const updatedCart = await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
+
+        const secret = updatedCart.clientSecret;
+        if (!secret) throw new Error('Payment intent was not properly initialized.');
+
+        console.log('Starting payment confirmation with secret:', secret);
+
+        // 2. PASS THE SECRET directly to the service
+        const result = await this.stripeService.confirmPayment(this.confirmationToken, secret);
 
         if (result.paymentIntent?.status === 'succeeded') {
-          console.log('Payment succeeded! Creating order...');
           const order = await this.createOrderModel();
-          console.log('Order model created:', order);
           const orderResult = await firstValueFrom(this.orderService.createOrder(order));
-          console.log('Order created successfully:', orderResult);
+
           if (orderResult) {
             this.orderService.orderComplete = true;
             this.cartService.deleteCart();
             this.cartService.selectedDelivery.set(null);
             this.router.navigateByUrl('/checkout/success');
-          } else {
-            throw new Error('Order creation failed');
           }
         } else if (result.error) {
           throw new Error(result.error.message);
-        } else {
-          throw new Error('Something went wrong');
-        }
-
-        if (result.error) {
-          throw new Error(result.error.message);
-        } else {
-          this.cartService.deleteCart();
-          this.cartService.selectedDelivery.set(null);
-          this.router.navigateByUrl('/checkout/success');
         }
       }
     } catch (error: any) {
+      console.error('Checkout Error:', error);
       this.snackbar.error(error.message || 'Something went wrong');
-      stepper.previous();
     } finally {
       this.loading = false;
     }
